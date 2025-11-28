@@ -375,7 +375,7 @@ The API uses JWT (JSON Web Token) authentication for protected endpoints.
 4. **Reference them in the README** using markdown:
    ```markdown
    ### Dashboard
-   ![Dashboard](C:\Users\91782\Documents\prou\employee-task-tracker\screenshots\dashboard.png)
+   ![Dashboard]https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/dashboard.png?raw=true
    
    ### Tasks Page
    ![Tasks Page](screenshots/tasks.png)
