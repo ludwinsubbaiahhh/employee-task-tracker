@@ -63,7 +63,7 @@ employee-task-tracker/
    ![Taskpage](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/task%20page.png?raw=true)
    ![task crud](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/task%20management.png?raw=true)
    ![employee crud](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/employee%20managemnet.png?raw=true)
-   ![database table]()
+   ![database table](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/database%20tables.png?raw=true)
 
 ## 🛠️ Setup Instructions
 
