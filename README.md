@@ -56,6 +56,12 @@ employee-task-tracker/
 │   └── README.md
 └── README.md              # This file
 ```
+## 📸 Screenshots
+
+   ### Dashboard
+   ![Dashboard](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/dashboard.png?raw=true)
+
+
 
 ## 🛠️ Setup Instructions
 
@@ -367,20 +373,6 @@ The API uses JWT (JSON Web Token) authentication for protected endpoints.
 ### Database
 - Supabase handles backups and scaling automatically
 - Consider setting up connection pooling for high traffic
-
-## 📸 Screenshots
-
-
-
-4. **Reference them in the README** using markdown:
-   ```markdown
-   ### Dashboard
-   ![Dashboard](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/dashboard.png?raw=true)
-   
-   ### Tasks Page
-   ![Tasks Page](screenshots/tasks.png)
-   ```
-
 
 
 ## 🤝 Contributing
