@@ -10,21 +10,23 @@ function App() {
     <div className="App">
       <header className="app-header">
         <div className="container">
-          <h1>Employee Task Tracker</h1>
-          <nav className="nav-tabs">
-            <button
-              className={`nav-tab ${activeTab === 'dashboard' ? 'active' : ''}`}
-              onClick={() => setActiveTab('dashboard')}
-            >
-              Dashboard
-            </button>
-            <button
-              className={`nav-tab ${activeTab === 'tasks' ? 'active' : ''}`}
-              onClick={() => setActiveTab('tasks')}
-            >
-              Tasks
-            </button>
-          </nav>
+          <div className="header-content">
+            <h1 className="app-title">Employee Task Tracker</h1>
+            <nav className="nav-tabs">
+              <button
+                className={`nav-tab ${activeTab === 'dashboard' ? 'active' : ''}`}
+                onClick={() => setActiveTab('dashboard')}
+              >
+                Dashboard
+              </button>
+              <button
+                className={`nav-tab ${activeTab === 'tasks' ? 'active' : ''}`}
+                onClick={() => setActiveTab('tasks')}
+              >
+                Tasks
+              </button>
+            </nav>
+          </div>
         </div>
       </header>
 

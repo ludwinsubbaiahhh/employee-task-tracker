@@ -15,7 +15,16 @@ const getAllTasks = async (req, res) => {
     const tasks = await Task.getAll(filters);
     res.json(tasks);
   } catch (error) {
-    console.error('Error fetching tasks:', error);
+    console.error('Error fetching tasks:', error.message);
+    
+    // Handle connection errors specifically
+    if (error.code === 'XX000' || error.message.includes('termination') || error.message.includes('shutdown')) {
+      return res.status(503).json({ 
+        error: 'Database connection issue. Please try again in a moment.',
+        retry: true 
+      });
+    }
+    
     res.status(500).json({ error: 'Failed to fetch tasks' });
   }
 };
@@ -120,7 +129,16 @@ const getDashboardStats = async (req, res) => {
     const stats = await Task.getStats();
     res.json(stats);
   } catch (error) {
-    console.error('Error fetching dashboard stats:', error);
+    console.error('Error fetching dashboard stats:', error.message);
+    
+    // Handle connection errors specifically
+    if (error.code === 'XX000' || error.message.includes('termination') || error.message.includes('shutdown')) {
+      return res.status(503).json({ 
+        error: 'Database connection issue. Please try again in a moment.',
+        retry: true 
+      });
+    }
+    
     res.status(500).json({ error: 'Failed to fetch dashboard stats' });
   }
 };

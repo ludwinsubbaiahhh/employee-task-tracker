@@ -5,7 +5,16 @@ const getAllEmployees = async (req, res) => {
     const employees = await Employee.getAll();
     res.json(employees);
   } catch (error) {
-    console.error('Error fetching employees:', error);
+    console.error('Error fetching employees:', error.message);
+    
+    // Handle connection errors specifically
+    if (error.code === 'XX000' || error.message.includes('termination') || error.message.includes('shutdown')) {
+      return res.status(503).json({ 
+        error: 'Database connection issue. Please try again in a moment.',
+        retry: true 
+      });
+    }
+    
     res.status(500).json({ error: 'Failed to fetch employees' });
   }
 };
