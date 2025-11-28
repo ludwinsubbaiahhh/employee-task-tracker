@@ -49,28 +49,25 @@ const createTask = async (req, res) => {
   try {
     const { title, description, status, priority, employee_id, due_date } = req.body;
 
-    // Validation
+    // Validation is handled by middleware, but double-check
     if (!title) {
-      return res.status(400).json({ error: 'Title is required' });
-    }
-
-    // Validate status if provided
-    const validStatuses = ['pending', 'in_progress', 'completed', 'cancelled'];
-    if (status && !validStatuses.includes(status)) {
-      return res.status(400).json({ error: 'Invalid status' });
-    }
-
-    // Validate priority if provided
-    const validPriorities = ['low', 'medium', 'high'];
-    if (priority && !validPriorities.includes(priority)) {
-      return res.status(400).json({ error: 'Invalid priority' });
+      return res.status(400).json({ 
+        error: 'Validation failed',
+        details: ['Title is required']
+      });
     }
 
     const task = await Task.create({ title, description, status, priority, employee_id, due_date });
-    res.status(201).json(task);
+    res.status(201).json({
+      message: 'Task created successfully',
+      task
+    });
   } catch (error) {
     console.error('Error creating task:', error);
-    res.status(500).json({ error: 'Failed to create task' });
+    res.status(500).json({ 
+      error: 'Failed to create task',
+      message: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
@@ -79,32 +76,33 @@ const updateTask = async (req, res) => {
     const { id } = req.params;
     const { title, description, status, priority, employee_id, due_date } = req.body;
 
+    // Validation is handled by middleware
     if (!title) {
-      return res.status(400).json({ error: 'Title is required' });
-    }
-
-    // Validate status if provided
-    const validStatuses = ['pending', 'in_progress', 'completed', 'cancelled'];
-    if (status && !validStatuses.includes(status)) {
-      return res.status(400).json({ error: 'Invalid status' });
-    }
-
-    // Validate priority if provided
-    const validPriorities = ['low', 'medium', 'high'];
-    if (priority && !validPriorities.includes(priority)) {
-      return res.status(400).json({ error: 'Invalid priority' });
+      return res.status(400).json({ 
+        error: 'Validation failed',
+        details: ['Title is required']
+      });
     }
 
     const task = await Task.update(id, { title, description, status, priority, employee_id, due_date });
     
     if (!task) {
-      return res.status(404).json({ error: 'Task not found' });
+      return res.status(404).json({ 
+        error: 'Not found',
+        message: 'Task not found'
+      });
     }
     
-    res.json(task);
+    res.json({
+      message: 'Task updated successfully',
+      task
+    });
   } catch (error) {
     console.error('Error updating task:', error);
-    res.status(500).json({ error: 'Failed to update task' });
+    res.status(500).json({ 
+      error: 'Failed to update task',
+      message: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 

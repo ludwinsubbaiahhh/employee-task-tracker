@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const employeeRoutes = require('./routes/employeeRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const authRoutes = require('./routes/authRoutes');
+const { optionalAuth } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,15 +24,38 @@ app.get('/', (req, res) => {
     message: 'Employee Task Tracker API',
     version: '1.0.0',
     endpoints: {
-      employees: '/api/employees',
-      employeesWithTasks: '/api/employees/with-tasks',
-      tasks: '/api/tasks',
-      dashboard: '/api/tasks/stats',
-    }
+      auth: {
+        login: 'POST /api/auth/login',
+        verify: 'GET /api/auth/verify (protected)'
+      },
+      employees: {
+        getAll: 'GET /api/employees',
+        getWithTasks: 'GET /api/employees/with-tasks',
+        getById: 'GET /api/employees/:id',
+        create: 'POST /api/employees (protected)',
+        update: 'PUT /api/employees/:id (protected)',
+        delete: 'DELETE /api/employees/:id (protected)'
+      },
+      tasks: {
+        getAll: 'GET /api/tasks (public)',
+        getById: 'GET /api/tasks/:id (public)',
+        create: 'POST /api/tasks (protected)',
+        update: 'PUT /api/tasks/:id (protected)',
+        delete: 'DELETE /api/tasks/:id (protected)',
+        stats: 'GET /api/tasks/stats (public)'
+      }
+    },
+    note: 'Endpoints marked as (protected) require JWT authentication'
   });
 });
 
+// Authentication routes
+app.use('/api/auth', authRoutes);
+
+// Employee routes (public GET, protected POST/PUT/DELETE)
 app.use('/api/employees', employeeRoutes);
+
+// Task routes (public GET, protected POST/PUT/DELETE)
 app.use('/api/tasks', taskRoutes);
 
 // Error handling middleware

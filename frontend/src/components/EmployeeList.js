@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { employeesAPI } from '../services/api';
+import EmployeeModal from './EmployeeModal';
 
 /**
  * EmployeeList Component
  * Displays a list of employees with their assigned tasks
- * Features: Interactive cards, task previews, status indicators
+ * Features: Interactive cards, task previews, status indicators, CRUD operations
  */
-const EmployeeList = ({ onSelectEmployee, selectedEmployeeId }) => {
+const EmployeeList = ({ onSelectEmployee, selectedEmployeeId, onEmployeeUpdate }) => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedEmployee, setExpandedEmployee] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingEmployee, setEditingEmployee] = useState(null);
 
   useEffect(() => {
     fetchEmployees();
@@ -82,12 +85,70 @@ const EmployeeList = ({ onSelectEmployee, selectedEmployeeId }) => {
   if (loading) return <div className="loading">Loading employees...</div>;
   if (error) return <div className="error">{error}</div>;
 
+  /**
+   * Handles creating a new employee
+   */
+  const handleCreateEmployee = () => {
+    setEditingEmployee(null);
+    setIsModalOpen(true);
+  };
+
+  /**
+   * Handles editing an existing employee
+   */
+  const handleEditEmployee = (employee, e) => {
+    e.stopPropagation();
+    setEditingEmployee(employee);
+    setIsModalOpen(true);
+  };
+
+  /**
+   * Handles deleting an employee
+   */
+  const handleDeleteEmployee = async (employeeId, e) => {
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this employee? This will unassign all their tasks.')) {
+      try {
+        await employeesAPI.delete(employeeId);
+        fetchEmployees();
+        if (onEmployeeUpdate) {
+          onEmployeeUpdate();
+        }
+      } catch (err) {
+        const errorMessage = err.response?.data?.error || 'Failed to delete employee';
+        alert(errorMessage);
+        console.error(err);
+      }
+    }
+  };
+
+  /**
+   * Handles successful employee save
+   */
+  const handleEmployeeSaved = () => {
+    setIsModalOpen(false);
+    setEditingEmployee(null);
+    fetchEmployees();
+    if (onEmployeeUpdate) {
+      onEmployeeUpdate();
+    }
+  };
+
   return (
     <div className="employee-list">
-      <h3 className="employee-list-title">
-        <span className="icon">👥</span>
-        Employees
-      </h3>
+      <div className="employee-list-header">
+        <h3 className="employee-list-title">
+          <span className="icon">👥</span>
+          Employees
+        </h3>
+        <button 
+          className="btn btn-primary btn-small" 
+          onClick={handleCreateEmployee}
+          title="Add new employee"
+        >
+          <span className="icon-small">➕</span> Add
+        </button>
+      </div>
       <div className="list-container">
         {employees.length === 0 ? (
           <div className="empty-state">
@@ -140,19 +201,26 @@ const EmployeeList = ({ onSelectEmployee, selectedEmployeeId }) => {
                       )}
                     </div>
                   )}
+                </div>
 
-                  {/* Expand/Collapse Button */}
-                  {taskCount > 0 && (
-                    <button
-                      className="expand-btn"
-                      onClick={(e) => toggleExpand(employee.id, e)}
-                      aria-label={isExpanded ? 'Collapse tasks' : 'Expand tasks'}
-                    >
-                      <span className={`expand-icon ${isExpanded ? 'expanded' : ''}`}>
-                        ▼
-                      </span>
-                    </button>
-                  )}
+                {/* Action Buttons - Bottom Row */}
+                <div className="employee-actions-bottom">
+                  <button
+                    className="action-btn edit-btn"
+                    onClick={(e) => handleEditEmployee(employee, e)}
+                    title="Edit employee"
+                  >
+                    <span className="icon-small">✏️</span>
+                    <span>Edit</span>
+                  </button>
+                  <button
+                    className="action-btn delete-btn"
+                    onClick={(e) => handleDeleteEmployee(employee.id, e)}
+                    title="Delete employee"
+                  >
+                    <span className="icon-small">🗑️</span>
+                    <span>Delete</span>
+                  </button>
                 </div>
 
                 {/* Expanded Tasks List */}
@@ -204,6 +272,18 @@ const EmployeeList = ({ onSelectEmployee, selectedEmployeeId }) => {
           })
         )}
       </div>
+
+      {/* Employee Modal */}
+      {isModalOpen && (
+        <EmployeeModal
+          employee={editingEmployee}
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingEmployee(null);
+          }}
+          onSave={handleEmployeeSaved}
+        />
+      )}
     </div>
   );
 };

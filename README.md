@@ -159,22 +159,30 @@ employee-task-tracker/
 
 ## 📡 API Endpoints
 
+### Authentication
+
+- `POST /api/auth/login` - Login with API key to get JWT token
+- `GET /api/auth/verify` - Verify JWT token (protected)
+
+**Note:** Protected endpoints (POST, PUT, DELETE) require JWT authentication. See `backend/API_DOCUMENTATION.md` for details.
+
 ### Employees
 
-- `GET /api/employees` - Get all employees
-- `GET /api/employees/:id` - Get employee by ID
-- `POST /api/employees` - Create a new employee
-- `PUT /api/employees/:id` - Update an employee
-- `DELETE /api/employees/:id` - Delete an employee
+- `GET /api/employees` - Get all employees (Public)
+- `GET /api/employees/with-tasks` - Get employees with their assigned tasks (Public)
+- `GET /api/employees/:id` - Get employee by ID (Public)
+- `POST /api/employees` - Create a new employee (Protected)
+- `PUT /api/employees/:id` - Update an employee (Protected)
+- `DELETE /api/employees/:id` - Delete an employee (Protected)
 
 ### Tasks
 
-- `GET /api/tasks` - Get all tasks (supports query params: `?status=pending&employee_id=1`)
-- `GET /api/tasks/:id` - Get task by ID
-- `POST /api/tasks` - Create a new task
-- `PUT /api/tasks/:id` - Update a task
-- `DELETE /api/tasks/:id` - Delete a task
-- `GET /api/tasks/stats` - Get dashboard statistics
+- `GET /api/tasks` - Get all tasks (Public, supports query params: `?status=pending&employee_id=1`)
+- `GET /api/tasks/:id` - Get task by ID (Public)
+- `GET /api/tasks/stats` - Get dashboard statistics (Public)
+- `POST /api/tasks` - Create a new task (Protected)
+- `PUT /api/tasks/:id` - Update a task (Protected)
+- `DELETE /api/tasks/:id` - Delete a task (Protected)
 
 ## 🎨 Features Overview
 
@@ -199,9 +207,14 @@ employee-task-tracker/
   - Due date
 
 ### Employee Management
-- View all employees in sidebar
+- View all employees in sidebar with assigned tasks
+- Create new employees with full details
+- Edit existing employee information
+- Delete employees (with confirmation)
 - Click on employee to filter their tasks
+- Expand employee cards to see all assigned tasks
 - Employees are displayed with name, email, position, and department
+- Task count and completion status for each employee
 
 ## 🗄️ Database Schema
 
@@ -236,18 +249,26 @@ employee-task-tracker/
 - ✅ Separation of concerns (components, pages, services)
 - ✅ Environment variables for configuration
 - ✅ Responsive design (mobile, tablet, desktop)
-- ✅ Clean, intuitive UI/UX
+- ✅ Clean, intuitive UI/UX with modern design
 - ✅ Error handling and loading states
 - ✅ RESTful API integration
+- ✅ JWT authentication integration
+- ✅ Form validation and user feedback
+- ✅ Smooth animations and transitions
 
 ### Backend
-- ✅ RESTful API design
+- ✅ RESTful API design with logical endpoints
 - ✅ MVC architecture (Models, Views/Controllers, Routes)
-- ✅ Input validation
-- ✅ Error handling middleware
+- ✅ Comprehensive input validation middleware
+- ✅ Error handling middleware with detailed messages
 - ✅ Environment variables for configuration
 - ✅ CORS configuration
-- ✅ Database connection pooling
+- ✅ Database connection pooling with proper settings
+- ✅ JWT authentication (Bonus Challenge)
+- ✅ Protected routes for write operations
+- ✅ Public read endpoints
+- ✅ Consistent error response format
+- ✅ Code comments and documentation
 
 ### Database
 - ✅ Proper relationships with foreign keys
@@ -255,6 +276,15 @@ employee-task-tracker/
 - ✅ Check constraints for data integrity
 - ✅ Automatic timestamp updates via triggers
 - ✅ Sample data for testing
+- ✅ Normalized schema design
+
+### API Design
+- ✅ Clean, logical RESTful endpoints
+- ✅ Proper HTTP status codes
+- ✅ Consistent response formats
+- ✅ Comprehensive validation
+- ✅ Detailed API documentation
+- ✅ Postman collection for testing
 
 ## 🧪 Testing the Application
 
@@ -275,6 +305,37 @@ employee-task-tracker/
 - Task priorities: low, medium, high
 - Due dates are optional
 - Email addresses must be unique for employees
+- Authentication required for create/update/delete operations
+- Public read access for viewing data
+
+## 🔐 Authentication
+
+The API uses JWT (JSON Web Token) authentication for protected endpoints.
+
+### Getting Started with Authentication
+
+1. **Login to get a token:**
+   ```bash
+   POST /api/auth/login
+   Body: { "apiKey": "demo-key-123" }
+   ```
+
+2. **Use the token in requests:**
+   ```
+   Authorization: Bearer <your-token>
+   ```
+
+3. **Available API Keys (for testing):**
+   - `demo-key-123` - Demo User
+   - `admin-key-456` - Admin User
+
+**Note:** The frontend automatically handles authentication for you. For API testing, see `backend/API_DOCUMENTATION.md` and `backend/POSTMAN_COLLECTION.md`.
+
+## 📚 Documentation
+
+- **API Documentation:** See `backend/API_DOCUMENTATION.md` for complete API reference
+- **Postman Collection:** See `backend/POSTMAN_COLLECTION.md` for testing instructions
+- **Database Schema:** See `database/schema.sql` and `database/README.md`
 
 ## 🚀 Deployment Considerations
 

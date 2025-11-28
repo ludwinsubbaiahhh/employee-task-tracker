@@ -39,22 +39,34 @@ const createEmployee = async (req, res) => {
   try {
     const { name, email, position, department } = req.body;
 
-    // Validation
+    // Validation is handled by middleware, but double-check
     if (!name || !email) {
-      return res.status(400).json({ error: 'Name and email are required' });
+      return res.status(400).json({ 
+        error: 'Validation failed',
+        details: ['Name and email are required']
+      });
     }
 
     const employee = await Employee.create({ name, email, position, department });
-    res.status(201).json(employee);
+    res.status(201).json({
+      message: 'Employee created successfully',
+      employee
+    });
   } catch (error) {
     console.error('Error creating employee:', error);
     
     // Handle unique constraint violation
     if (error.code === '23505') {
-      return res.status(400).json({ error: 'Email already exists' });
+      return res.status(400).json({ 
+        error: 'Validation failed',
+        details: ['Email already exists']
+      });
     }
     
-    res.status(500).json({ error: 'Failed to create employee' });
+    res.status(500).json({ 
+      error: 'Failed to create employee',
+      message: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
@@ -63,25 +75,41 @@ const updateEmployee = async (req, res) => {
     const { id } = req.params;
     const { name, email, position, department } = req.body;
 
+    // Validation is handled by middleware
     if (!name || !email) {
-      return res.status(400).json({ error: 'Name and email are required' });
+      return res.status(400).json({ 
+        error: 'Validation failed',
+        details: ['Name and email are required']
+      });
     }
 
     const employee = await Employee.update(id, { name, email, position, department });
     
     if (!employee) {
-      return res.status(404).json({ error: 'Employee not found' });
+      return res.status(404).json({ 
+        error: 'Not found',
+        message: 'Employee not found'
+      });
     }
     
-    res.json(employee);
+    res.json({
+      message: 'Employee updated successfully',
+      employee
+    });
   } catch (error) {
     console.error('Error updating employee:', error);
     
     if (error.code === '23505') {
-      return res.status(400).json({ error: 'Email already exists' });
+      return res.status(400).json({ 
+        error: 'Validation failed',
+        details: ['Email already exists']
+      });
     }
     
-    res.status(500).json({ error: 'Failed to update employee' });
+    res.status(500).json({ 
+      error: 'Failed to update employee',
+      message: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 

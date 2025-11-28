@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getToken, autoLogin } from './auth';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -8,6 +9,50 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// Request interceptor to add auth token
+api.interceptors.request.use(
+  async (config) => {
+    // For protected routes (POST, PUT, DELETE), add auth token
+    if (['post', 'put', 'delete'].includes(config.method.toLowerCase())) {
+      let token = getToken();
+      
+      // Auto-login if no token (for development convenience)
+      if (!token) {
+        token = await autoLogin();
+      }
+      
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle auth errors
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      // Token expired or invalid - try to re-authenticate
+      try {
+        const token = await autoLogin();
+        if (token) {
+          // Retry the original request
+          error.config.headers.Authorization = `Bearer ${token}`;
+          return api.request(error.config);
+        }
+      } catch (authError) {
+        console.error('Re-authentication failed:', authError);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 // Employees API
 export const employeesAPI = {

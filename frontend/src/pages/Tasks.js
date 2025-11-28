@@ -27,6 +27,11 @@ const Tasks = () => {
     setSelectedEmployeeId(null);
   };
 
+  const handleEmployeeUpdate = () => {
+    // Refresh task list when employees are updated
+    // This will be handled by TaskList component through filters
+  };
+
   return (
     <div className="tasks-page">
       <div className="page-layout">
@@ -34,6 +39,7 @@ const Tasks = () => {
           <EmployeeList
             onSelectEmployee={handleSelectEmployee}
             selectedEmployeeId={selectedEmployeeId}
+            onEmployeeUpdate={handleEmployeeUpdate}
           />
           <div style={{ marginTop: '20px' }}>
             <button className="btn btn-secondary" onClick={handleClearFilters}>

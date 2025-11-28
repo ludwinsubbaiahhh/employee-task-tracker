@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { tasksAPI, employeesAPI } from '../services/api';
 
 const TaskModal = ({ task, onClose, onSave }) => {
@@ -71,7 +72,7 @@ const TaskModal = ({ task, onClose, onSave }) => {
     }
   };
 
-  return (
+  const modalContent = (
     <div className="modal" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
@@ -167,6 +168,9 @@ const TaskModal = ({ task, onClose, onSave }) => {
       </div>
     </div>
   );
+
+  // Render modal using portal at document body level to ensure proper z-index stacking
+  return createPortal(modalContent, document.body);
 };
 
 export default TaskModal;
