@@ -370,71 +370,18 @@ The API uses JWT (JSON Web Token) authentication for protected endpoints.
 
 ## 📸 Screenshots
 
-### How to Add Screenshots
 
-1. **Create a `screenshots` folder** in the root of your project:
-   ```bash
-   mkdir screenshots
-   ```
-
-2. **Take screenshots** of your application:
-   - Dashboard view
-   - Tasks page
-   - Employee management
-   - Task creation/edit modals
-   - Mobile responsive views (optional)
-
-3. **Add images to the folder** (e.g., `screenshots/dashboard.png`, `screenshots/tasks.png`)
 
 4. **Reference them in the README** using markdown:
    ```markdown
    ### Dashboard
-   ![Dashboard](screenshots/dashboard.png)
+   ![Dashboard](C:\Users\91782\Documents\prou\employee-task-tracker\screenshots\dashboard.png)
    
    ### Tasks Page
    ![Tasks Page](screenshots/tasks.png)
    ```
 
-### Example Screenshot Section
 
-<!-- Uncomment and update these when you have screenshots -->
-<!--
-### Dashboard View
-![Dashboard](screenshots/dashboard.png)
-*Dashboard showing task statistics and completion rates*
-
-### Tasks Management
-![Tasks Page](screenshots/tasks.png)
-*Tasks page with filtering and task cards*
-
-### Employee Management
-![Employees](screenshots/employees.png)
-*Employee list with task assignments*
-
-### Responsive Design
-![Mobile View](screenshots/mobile.png)
-*Mobile-responsive layout*
--->
-
-### Screen Recording (Optional)
-
-For a more dynamic demonstration, you can:
-1. Record a short screen recording (30-60 seconds) showing:
-   - Navigating between Dashboard and Tasks
-   - Creating/editing a task
-   - Managing employees
-   - Filtering functionality
-
-2. Upload to:
-   - **GitHub**: Use GitHub's file upload feature (files up to 100MB)
-   - **YouTube**: Upload as unlisted and embed the link
-   - **GIF**: Convert to GIF using tools like [LICEcap](https://www.cockos.com/licecap/) or [ScreenToGif](https://www.screentogif.com/)
-
-3. Add to README:
-   ```markdown
-   ### Demo Video
-   [![Watch the demo](screenshots/demo-thumbnail.png)](https://youtube.com/watch?v=YOUR_VIDEO_ID)
-   ```
 
 ## 🤝 Contributing
 
