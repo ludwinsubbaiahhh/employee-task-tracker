@@ -61,8 +61,9 @@ employee-task-tracker/
    ### Dashboard
    ![Dashboard](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/dashboard.png?raw=true)
    ![Taskpage](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/task%20page.png?raw=true)
-
-
+   ![task crud](https://github.com/ludwinsubbaiahhh/employee-task-tracker/blob/main/screenshots/task%20management.png?raw=true)
+   ![employee crud]()
+   ![database table]()
 
 ## 🛠️ Setup Instructions
 
