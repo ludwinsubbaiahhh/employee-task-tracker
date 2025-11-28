@@ -101,11 +101,41 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
+const getEmployeesWithTasks = async (req, res) => {
+  try {
+    console.log('Fetching employees with tasks...');
+    const employees = await Employee.getAllWithTasks();
+    console.log(`Successfully fetched ${employees.length} employees with tasks`);
+    res.json(employees);
+  } catch (error) {
+    console.error('Error fetching employees with tasks:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
+    
+    // Handle connection errors specifically
+    if (error.code === 'XX000' || error.message.includes('termination') || error.message.includes('shutdown')) {
+      return res.status(503).json({ 
+        error: 'Database connection issue. Please try again in a moment.',
+        retry: true 
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Failed to fetch employees with tasks',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+};
+
 module.exports = {
   getAllEmployees,
   getEmployeeById,
   createEmployee,
   updateEmployee,
   deleteEmployee,
+  getEmployeesWithTasks,
 };
 

@@ -6,8 +6,10 @@ const {
   createEmployee,
   updateEmployee,
   deleteEmployee,
+  getEmployeesWithTasks,
 } = require('../controllers/employeeController');
 
+router.get('/with-tasks', getEmployeesWithTasks);
 router.get('/', getAllEmployees);
 router.get('/:id', getEmployeeById);
 router.post('/', createEmployee);

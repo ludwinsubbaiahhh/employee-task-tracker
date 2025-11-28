@@ -12,6 +12,7 @@ const api = axios.create({
 // Employees API
 export const employeesAPI = {
   getAll: () => api.get('/employees'),
+  getAllWithTasks: () => api.get('/employees/with-tasks'),
   getById: (id) => api.get(`/employees/${id}`),
   create: (data) => api.post('/employees', data),
   update: (id, data) => api.put(`/employees/${id}`, data),

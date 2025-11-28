@@ -55,6 +55,43 @@ class Employee {
     `);
     return result.rows;
   }
+
+  /**
+   * Get all employees with their assigned tasks
+   * Returns employees with nested task information
+   */
+  static async getAllWithTasks() {
+    // First get all employees
+    const employeesResult = await pool.query(
+      'SELECT * FROM employees ORDER BY created_at DESC'
+    );
+    
+    // Then get all tasks grouped by employee
+    const tasksResult = await pool.query(`
+      SELECT 
+        t.*,
+        t.employee_id
+      FROM tasks t
+      WHERE t.employee_id IS NOT NULL
+      ORDER BY t.created_at DESC
+    `);
+    
+    // Group tasks by employee_id
+    const tasksByEmployee = {};
+    tasksResult.rows.forEach(task => {
+      if (!tasksByEmployee[task.employee_id]) {
+        tasksByEmployee[task.employee_id] = [];
+      }
+      tasksByEmployee[task.employee_id].push(task);
+    });
+    
+    // Combine employees with their tasks
+    return employeesResult.rows.map(employee => ({
+      ...employee,
+      tasks: tasksByEmployee[employee.id] || [],
+      task_count: (tasksByEmployee[employee.id] || []).length
+    }));
+  }
 }
 
 module.exports = Employee;

@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
     version: '1.0.0',
     endpoints: {
       employees: '/api/employees',
+      employeesWithTasks: '/api/employees/with-tasks',
       tasks: '/api/tasks',
       dashboard: '/api/tasks/stats',
     }
