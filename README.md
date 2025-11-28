@@ -297,8 +297,9 @@ employee-task-tracker/
 7. **Delete Task**: Click "Delete" on any task card (with confirmation)
 8. **Clear Filters**: Click "Clear Filters" button
 
-## 📝 Assumptions
+## 📝 Assumptions & Design Decisions
 
+### Assumptions
 - Employees can have multiple tasks assigned
 - Tasks can be unassigned (no employee)
 - Task statuses: pending, in_progress, completed, cancelled
@@ -307,6 +308,19 @@ employee-task-tracker/
 - Email addresses must be unique for employees
 - Authentication required for create/update/delete operations
 - Public read access for viewing data
+
+### Bonus Features Implemented
+- ✅ **JWT Authentication**: Secure API endpoints with token-based authentication
+- ✅ **Input Validation**: Comprehensive validation middleware using express-validator
+- ✅ **API Documentation**: Complete API documentation with examples
+- ✅ **Postman Collection**: Ready-to-use Postman collection for API testing
+- ✅ **Enhanced UI/UX**: Modern, responsive design with smooth animations
+- ✅ **Employee CRUD Operations**: Full create, read, update, delete for employees
+- ✅ **Task Assignment Display**: Visual representation of tasks assigned to employees
+- ✅ **Dashboard Statistics**: Real-time statistics with completion rate calculation
+- ✅ **Error Handling**: Comprehensive error handling with user-friendly messages
+- ✅ **Database Connection Pooling**: Optimized database connections with proper pooling
+- ✅ **React Portals**: Modals rendered using React portals for proper z-index stacking
 
 ## 🔐 Authentication
 
@@ -356,7 +370,71 @@ The API uses JWT (JSON Web Token) authentication for protected endpoints.
 
 ## 📸 Screenshots
 
-*Note: Add screenshots or screen recordings of your application here*
+### How to Add Screenshots
+
+1. **Create a `screenshots` folder** in the root of your project:
+   ```bash
+   mkdir screenshots
+   ```
+
+2. **Take screenshots** of your application:
+   - Dashboard view
+   - Tasks page
+   - Employee management
+   - Task creation/edit modals
+   - Mobile responsive views (optional)
+
+3. **Add images to the folder** (e.g., `screenshots/dashboard.png`, `screenshots/tasks.png`)
+
+4. **Reference them in the README** using markdown:
+   ```markdown
+   ### Dashboard
+   ![Dashboard](screenshots/dashboard.png)
+   
+   ### Tasks Page
+   ![Tasks Page](screenshots/tasks.png)
+   ```
+
+### Example Screenshot Section
+
+<!-- Uncomment and update these when you have screenshots -->
+<!--
+### Dashboard View
+![Dashboard](screenshots/dashboard.png)
+*Dashboard showing task statistics and completion rates*
+
+### Tasks Management
+![Tasks Page](screenshots/tasks.png)
+*Tasks page with filtering and task cards*
+
+### Employee Management
+![Employees](screenshots/employees.png)
+*Employee list with task assignments*
+
+### Responsive Design
+![Mobile View](screenshots/mobile.png)
+*Mobile-responsive layout*
+-->
+
+### Screen Recording (Optional)
+
+For a more dynamic demonstration, you can:
+1. Record a short screen recording (30-60 seconds) showing:
+   - Navigating between Dashboard and Tasks
+   - Creating/editing a task
+   - Managing employees
+   - Filtering functionality
+
+2. Upload to:
+   - **GitHub**: Use GitHub's file upload feature (files up to 100MB)
+   - **YouTube**: Upload as unlisted and embed the link
+   - **GIF**: Convert to GIF using tools like [LICEcap](https://www.cockos.com/licecap/) or [ScreenToGif](https://www.screentogif.com/)
+
+3. Add to README:
+   ```markdown
+   ### Demo Video
+   [![Watch the demo](screenshots/demo-thumbnail.png)](https://youtube.com/watch?v=YOUR_VIDEO_ID)
+   ```
 
 ## 🤝 Contributing
 
