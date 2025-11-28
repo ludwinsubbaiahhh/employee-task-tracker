@@ -1,5 +1,5 @@
 # Employee Task Tracker
-DEMO VIDEO LINK : https://www.loom.com/share/43d4217007084d4885ec2da3762eda42
+DEMO VIDEO LINK : https://www.loom.com/share/897e47e616674e63b0580f988d3cb030
 
 A full-stack web application for managing employees and their tasks within a company. Built with React frontend, Node.js/Express backend, and Supabase PostgreSQL database.
 
